@@ -396,12 +396,12 @@ module OpenProject
         else
           case Setting.email_delivery_method
           when :smtp
-            ActionMailer::Base.perform_deliveries = true
+            ActionMailer::Base.perform_deliveries = false
             ActionMailer::Base.delivery_method = Setting.email_delivery_method
 
             reload_smtp_settings!
           when :sendmail
-            ActionMailer::Base.perform_deliveries = true
+            ActionMailer::Base.perform_deliveries = false
             ActionMailer::Base.delivery_method = Setting.email_delivery_method
           end
         end
@@ -416,7 +416,7 @@ module OpenProject
       def configure_legacy_action_mailer(config)
         return true if config['email_delivery_method'].blank?
 
-        ActionMailer::Base.perform_deliveries = true
+        ActionMailer::Base.perform_deliveries = false
         ActionMailer::Base.delivery_method = config['email_delivery_method'].to_sym
 
         ['smtp_', 'sendmail_'].each do |config_type|
